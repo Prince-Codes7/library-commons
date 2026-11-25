@@ -8,3 +8,4 @@ ansible/vars.yml
 ansible/ansible.cfg
 ansible/hosts
 docker/.env
+docker/registrations.csv
