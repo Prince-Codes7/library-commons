@@ -1,7 +1,6 @@
 package Libki::Controller::Administration;
 use Moose;
 use namespace::autoclean;
-use Scalar::Util qw(looks_like_number);
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -45,10 +44,8 @@ sub index : Path : Args(0) {
     $c->stash(
         DefaultTimeAllowance   => $c->setting('DefaultTimeAllowance'),
         CustomJsAdministration => $c->setting('CustomJsAdministration'),
-        PrinterConfiguration   => $c->setting('PrinterConfiguration'),
         ShowFirstLastNames     => $c->setting('ShowFirstLastNames'),
         UserCategories         => $c->setting('UserCategories'),
-        GratisPrintingValue    => looks_like_number($c->setting('GratisPrintingValue')) ? $c->setting('GratisPrintingValue') : 0,
         locations              => \@locations,
         types                  => \@types,
     );
