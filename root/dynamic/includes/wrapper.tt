@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" [%#%]"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head data-instance="[% c.instance | html %]">
     <title>[% template.title or meta.title | html %]</title>
 
@@ -36,7 +35,7 @@
     <script type="text/javascript" src="[% c.uri_for('/static/js/strftime.js') %]"></script>
 
     <script type="text/javascript" src="[% c.uri_for('/static/js/main.js') %]"></script>
-    <link rel="stylesheet" href="[% c.uri_for('/static/css/main.css') %]" />
+    <link rel="stylesheet" href="[% c.uri_for('/static/css/main.css') %]?v=unilag-6" />
 
     <script type="text/javascript">
         var DateDisplayFormat;
@@ -130,23 +129,26 @@
     </script>
 </head>
 
-<body>
+<body class="unilag-app [% IF interface == 'administration' %]unilag-admin[% ELSE %]unilag-public[% END %]">
     [% IF interface == 'administration' %]
         [% IF c.user %]
             [% INCLUDE navbar_administration.tt %]
+            [% INCLUDE breadcrumbs.tt %]
         [% END %]
-        [% INCLUDE breadcrumbs.tt %]
     [% ELSE %]
         [% INCLUDE navbar_public.tt %]
     [% END %]
 
-    <div id="content" class="container-fluid">
+    <main id="content" class="container-fluid unilag-content">
         [%# This is where TT will stick all of your template's contents. -%]
         [% content %]
-    </div><!-- /container -->
+    </main>
 
-    <div class="container-fluid">
-        [% IF version && c.user %]Libki [% version | html %][% END %]
-    </div><!-- /container -->
+    <footer class="unilag-footer">
+        <span>UNILAG Library Services</span>
+        [% IF version && c.user %]
+            <span class="unilag-footer__version">Platform v[% version | html %]</span>
+        [% END %]
+    </footer>
 </body>
 </html>

@@ -1,6 +1,15 @@
 [% meta.title = c.loc("Administration") %]
 [% SET active_class = 'administration__index' %]
 
+<header class="unilag-page-header">
+    <div>
+        <p class="unilag-eyebrow">UNIVERSITY OF LAGOS <span aria-hidden="true">/</span> LIBRARY SERVICES</p>
+        <h1>Library operations</h1>
+        <p>Manage accounts, service stations, active sessions and reservations.</p>
+    </div>
+    <span class="unilag-page-header__mark" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+</header>
+
 <ul class="nav nav-tabs" id="primaryTabs" role="tablist">
   <li class="nav-item">
       <a class="nav-link" id="users-tab" data-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="true"><i class="fas fa-users"></i> [% c.loc("Users") %]</a>
@@ -14,11 +23,6 @@
   <li class="nav-item">
       <a class="nav-link" id="reservations-tab" data-toggle="tab" href="#reservations" role="tab" aria-controls="reservations" aria-selected="false"><i class="fas fa-clock"></i> [% c.loc("Reservations") %]</a>
   </li>
-  [% IF PrinterConfiguration %]
-  <li class="nav-item">
-      <a class="nav-link" id="prints-tab" data-toggle="tab" href="#prints" role="tab" aria-controls="prints" aria-selected="false"><i class="fas fa-print"></i> [% c.loc("Prints") %]</a>
-  </li>
-  [% END %]
 </ul>
 <div class="tab-content" id="primaryTabsContent">
   <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
@@ -56,8 +60,6 @@
                 <th>[% c.loc("Category") %]</th>
                 <th>[% c.loc("Daily minutes") %]</th>
                 <th>[% c.loc("Session minutes") %]</th>
-                <th>[% c.loc("Funds") %]</th>
-                <th>[% c.loc("Gratis print balance") %]</th>
                 <th>[% c.loc("Status") %]</th>
                 <th>[% c.loc("Notes") %]</th>
                 <th>[% c.loc("Troublemaker") %]</th>
@@ -164,6 +166,7 @@
 
   <div class="tab-pane fade show active" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
     <div class="row">
+        [% IF locations.size > 1 || UserCategories %]
         <div class="col-sm-2 border-right pt-3">
         [% IF locations.size > 1 %]
             <h4>[% c.loc("Location") %]</h4>
@@ -184,6 +187,9 @@
         [% END %]
         </div>
         <div class="col-sm-10">
+        [% ELSE %]
+        <div class="col-12">
+        [% END %]
             <nav class="navbar navbar-expand-lg navbar-light bg-none">
                 <ul class="navbar-nav mr-auto"></ul>
                 <ul class="navbar-nav">
@@ -225,110 +231,6 @@
         </div>
     </div>
 </div>
-
-  <div class="tab-pane fade" id="prints" role="tabpanel" aria-labelledby="prints-tab">
-	<nav class="navbar navbar-expand-lg navbar-light bg-none">
-        [% IF locations.size > 1 %]
-        <ul class="nav nav-pills" id="print-locations">
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">[% c.loc("Location") %]:</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link active" data-toggle="pill" href="#" data-location="">[% c.loc("All") %]</a>
-          </li>
-          [% FOREACH location IN locations %]
-              <li class="nav-item">
-                  <a class="nav-link" data-toggle="pill" href="#" data-location="[% location %]">[% location %]</a>
-              </li>
-          [% END %]
-        </ul>
-        [% END %]
-
-        <ul class="navbar-nav mr-auto"></ul>
-
-        <ul class="navbar-nav">
-            <li class="nav-item refresh-button-group">
-                <div class="btn-group" role="group" aria-label="Table actions">
-                    <div id="print-table-refresh" class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text" id="btnGroupAddon">[% c.loc("Refresh") %]</div>
-                        </div>
-                        <a href="#" id="print-table-refresh-button" class="btn btn-secondary form-control"><i class="fas fa-sync"></i></a>
-                        <div class="input-group-append">
-                            <span class="input-group-text libki-refresh-counter" id="print-table-refresh-counter">30</span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <div class="btn-group" role="group" aria-label="New user actions">
-                    [% IF !c.config.SIP.enable || c.check_user_roles('superadmin') %]
-                        <a href="#" class="new-user-button btn btn-info"><i class="fas fa-user-plus"></i> [% c.loc("New user") %]</i></a>
-                    [% END %]
-                    <a href="#" class="new-guest-button btn btn-primary">[% c.loc("New guest") %] <i class="fas fa-user"></i></a>
-                    <a href="#" class="multi-guest-button btn btn-info">[% c.loc("Multiple guests") %] <i class="fas fa-users"></i></a>
-                </div>
-            </li>
-        </ul>
-	</nav>
-
-        <table id="print-table" cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
-            <thead>
-                <th>[% c.loc("Type") %]</th>
-                <th>[% c.loc("Status") %]</th>
-                <th>[% c.loc("Printer") %]</th>
-                <th>[% c.loc("Copies") %]</th>
-                <th>[% c.loc("File name") %]</th>
-                <th>[% c.loc("Pages") %]</th>
-                <th>[% c.loc("Client") %]</th>
-                <th>[% c.loc("User") %]</th>
-                <th>[% c.loc("Created") %]</th>
-            </thead>
-        </table>
-
-        <div id="print-table-row-toolbar" class="table-row-toolbar" role="toolbar">
-            <div class="btn-group" role="group">
-                <button
-                    id="print-table-row-toolbar-release"
-                    class="btn libki-toolbar-btn btn-outline-primary"
-                >
-                    <i class="fas fa-print"></i> [% c.loc("Print") %]
-                </button>
-
-                <button
-                    id="print-table-row-toolbar-refresh"
-                    class="btn libki-toolbar-btn btn-outline-info"
-                >
-                    <i class="fas fa-sync"></i> [% c.loc("Refresh") %]
-                </button>
-
-                [% IF c.setting('CanAdminsViewPrintFiles') == 'Y' %]
-                    <button
-                        id="print-table-row-toolbar-download"
-                        class="btn libki-toolbar-btn btn-outline-secondary"
-                        onclick="window.open('/administration/api/printjob/view?type=download&id=' + window.selected_id, '_blank' )"
-                    >
-                        <i class="fas fa-download"></i> [% c.loc("Download") %]
-                    </button>
-
-                    <button
-                        id="print-table-row-toolbar-view"
-                        class="btn libki-toolbar-btn btn-outline-info"
-                        onclick="window.open('/administration/api/printjob/view?id=' + window.selected_id, '_blank' )"
-                    >
-                        <i class="fas fa-eye"></i> [% c.loc("View") %]
-                    </button>
-                [% END %]
-
-                <button
-                    id="print-table-row-toolbar-cancel"
-                    class="btn libki-toolbar-btn btn-outline-danger"
-                >
-                    <i class="fa fa-ban"></i> [% c.loc("Cancel") %]
-                </button>
-            </div>
-        </div>
-  </div>
 
   <div class="tab-pane fade" id="reservations" role="tabpanel" aria-labelledby="reservations-tab">
 
@@ -600,19 +502,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="edit-user-modal-form-funds">[% c.loc("Funds") %]</label>
-                    <input class="form-control" id="edit-user-modal-form-funds" name="funds" class="input-mini" type="text">
-                    <small class="form-text text-muted">[% c.loc("Use period as separator when editing funds.") %]</small>
-                </div>
-
-                [% IF GratisPrintingValue > 0 %]
-                <div class="form-group">
-                    <label for="edit-user-modal-form-gratis_print_balance">[% c.loc("Gratis print balance") %]</label>
-                    <input class="form-control" id="edit-user-modal-form-gratis_print_balance" name="gratis_print_balance" class="input-mini" type="text">
-                </div>
-                [% END %]
-
-                <div class="form-group">
                     <label for="edit-user-modal-form-status">[% c.loc("Status") %]</label>
                     <select class="form-control" id="edit-user-modal-form-status" name="status">
                         <option value="enabled">[% c.loc("Enabled") %]</option>
@@ -879,9 +768,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
     /**** Handle refreshing of tables ****/
-    // Refresh the client and print jobs tables automatically, as its date will go stale quickly
+    // Refresh the active session table automatically, as its data can go stale quickly
     sessionRefreshCounter = setInterval( function(){HandleSessionTableRefreshCounter()}, 1000 );
-    printsRefreshCounter = setInterval( function(){HandlePrintTableRefreshCounter()}, 1000 );
 
 
     // Client Table refreshing on type limit
@@ -905,12 +793,6 @@ $(document).ready(function() {
         $(this).parent().parent().find('.nav-link').removeClass('active');
         $(this).addClass('active');
     });
-    // Print Table refreshing on location limit
-    $('#print-locations .nav-link').click(function() {
-        const location = $(this).data('location');
-        PrintTableUpdateLocationFilter(location);
-    });
-
     // Set up the manual refresh buttons for each table
     $('#client-table-refresh-button').on( 'click', function() {
         ForceClientTableRefresh();
@@ -922,10 +804,6 @@ $(document).ready(function() {
     });
     $('#user-table-refresh-button').on('click', function() {
         ForceUserTableRefresh();
-        return false;
-    });
-    $('#print-table-refresh-button').on('click', function() {
-        ForcePrintTableRefresh();
         return false;
     });
     $('#reservation-table-refresh-button').on( 'click', function() {
@@ -968,17 +846,6 @@ $(document).ready(function() {
             },
             { "data": "minutes_allotment" }, // Daily minutes
             { "data": "minutes" }, // Session minutes
-            {
-                "data": function(data) {
-                    //FIXME: We should allow the currency to be selectable via a system setting
-                    return new Intl.NumberFormat('[% c.language %]', { style: 'currency', currency: 'USD' }).format(data.funds);
-                },
-                "visible": [% IF PrinterConfiguration %]true[% ELSE %]false[% END %]
-            },
-            {
-                "data": "gratis_print_balance",
-                "visible": [% IF GratisPrintingValue > 0 %]true[% ELSE %]false[% END %]
-            },
             { "data": "status" }, // User stats
             { "data": "notes" },
             { "data": "is_troublemaker" },
@@ -1164,50 +1031,6 @@ $(document).ready(function() {
              AddTableRowToolbar( $('#reservation-table-row-toolbar'), $('#reservation-table'), $('#reservation-table tbody tr') );
          },
      } );
-
-    // Initalize the Print table as a datatable
-    const pTable = $('#print-table').DataTable( {
-        [% IF !c.language.match('en') %]"language": { "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/[% c.installed_languages.${c.language} %].json" },[% END %]
-        "processing": true,  // Indicate when the table is processing data
-        "serverSide": true,  // Indicate that the datatable gets data from a HTTP GET request
-        "ajax": function (data, callback, settings ) {
-            if ( window.location_filter ) {
-                data.location_filter = window.location_filter;
-            }
-
-            $.getJSON("[% c.uri_for('/administration/api/datatables/prints') %]", data, function (json) {
-                callback(json);
-            } );
-        },
-        columnDefs: [
-            { targets: [4], className: 'truncate-cell' }
-        ],
-        "order": [[ 7, "desc" ]],
-        "drawCallback": function(oSettings, json) {
-            AddTableRowToolbar( $('#print-table-row-toolbar'), $('#print-table'), $('#print-table tbody tr') );
-        },
-        "rowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            // Type column
-            $('td:eq(0)', nRow).html(aData[0].replace('PrintManager', `[% c.loc("Print Manager") %]`));
-
-            // Status column
-            $('td:eq(1)', nRow).html(aData[1].replace('In_progress', `[% c.loc("In progress") %]`));
-
-            // Client column
-            $('td:eq(6)', nRow).html(aData[6].replace('__PRINT_FROM_WEB__', `<em>[% c.loc("Uploaded from Web") %]</em>`));
-
-            // DateTime created
-            $('td:eq(8)', nRow).html(aData[8].replace('T', ' '));
-
-            // add class to row
-            if (aData[1] === 'Done') {
-                $(nRow).addClass('print-row-done');
-            }
-        },
-        "initComplete": function(){
-            $('#print-table-toolbar').prependTo($('#print-table_filter'));
-        }
-    } );
 
     /*********** Page Wide Actions ***********/
     // Set up the 'new user' button
@@ -1487,8 +1310,6 @@ $(document).ready(function() {
             $('#edit-user-modal-form-lastname').val( data.lastname );
             $('#edit-user-modal-form-category').val( data.category );
             $('#edit-user-modal-form-minutes').val( data.minutes );
-            $('#edit-user-modal-form-funds').val( Number.parseFloat(data.funds).toFixed(2) );
-            $('#edit-user-modal-form-gratis_print_balance').val( data.gratis_print_balance );
             $('#edit-user-modal-form-status').val( data.status );
             $('#edit-user-modal-form-notes').val( data.notes );
 
@@ -1955,47 +1776,6 @@ $(document).ready(function() {
       $('#modify-time-modal-form-submit').removeAttr('disabled');
     })
 
-/*********** Prints Table  ***********/
-
-    /* Release Print Job */
-    $('#print-table-row-toolbar-release').click(function() {
-      $.getJSON('[% c.uri_for("api/printjob/release") %]', { id: window.selected_id }, function(data) {
-        if ( data.success ) {
-          DisplayMessage( "success", data.message );
-          ForcePrintTableRefresh();
-        } else {
-            DisplayMessage( "error", "[% c.loc("Failed to release print job: ") %]" + data.error );
-        }
-      });
-    });
-
-    /* Refresh Print Job */
-    $('#print-table-row-toolbar-refresh').click(function() {
-      $.getJSON('[% c.uri_for("api/printjob/update") %]', { id: window.selected_id }, function(data) {
-        if ( data.success ) {
-          DisplayMessage( "success", "[% c.loc("Print job refreshed") %]: " + window.selected_id );
-          ForcePrintTableRefresh();
-        } else {
-          DisplayMessage( "error", data.data );
-        }
-      });
-    });
-
-    /* Cancel Print Job */
-    $('#print-table-row-toolbar-cancel').click(function() {
-      if ( confirm("[% c.loc("Are you sure you want to cancel this print job?") %]")){
-        $.getJSON('[% c.uri_for("api/printjob/cancel") %]', { id: window.selected_id }, function(data) {
-          if ( data.success ) {
-            DisplayMessage( 'success', "[% c.loc("Print job has been canceled.") %]" );
-            ForcePrintTableRefresh();
-          } else {
-            DisplayMessage( 'error', "[% c.loc("Failed to cancel print job.") %]");
-          }
-        });
-      }
-    });
-
-
 /*********** Helper Functions ***********/
 
 function HandleSessionTableRefreshCounter() {
@@ -2072,26 +1852,6 @@ function ForceReservationTableRefresh() {
      rTable.draw(true);
 }
 
-function HandlePrintTableRefreshCounter() {
-    var countdown = parseInt( $('#print-table-refresh-counter').text() ) - 1;
-
-    if ( countdown ) {
-        $('#print-table-refresh-counter').text( countdown );
-    } else {
-        ForcePrintTableRefresh();
-    }
-}
-
-window.PrintTableUpdateLocationFilter = function( location ) {
-    window.location_filter = location;
-    ForcePrintTableRefresh();
-}
-
-function ForcePrintTableRefresh() {
-     pTable.draw(true);
-     $('#print-table-refresh-counter').text( '30' );
-}
-
 function postForm(url, fields) {
     var $form = $('<form>', {
         action: url,
@@ -2127,6 +1887,9 @@ function buildTree(data, parentId = null) {
 
 function renderTree(target_id, tree) {
   const el = document.getElementById(target_id);
+  if (!el) {
+    return;
+  }
   el.innerHTML='';
   function node(n){
     const li=document.createElement('li');

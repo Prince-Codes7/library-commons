@@ -34,7 +34,7 @@ sub users : Local Args(0) {
     my $params = $c->req->params;
 
     # We need to map the table columns to field names for ordering
-    my @columns = qw/me.username me.lastname me.firstname me.category allotments.minutes session.minutes me.funds me.gratis_print_balance me.status me.notes me.is_troublemaker client.name session.status me.creation_source/;
+    my @columns = qw/me.username me.firstname me.lastname me.category allotments.minutes session.minutes me.status me.notes me.is_troublemaker client.name session.status me.creation_source/;
 
     my $search_term = $params->{"search[value]"};
     my $filter;

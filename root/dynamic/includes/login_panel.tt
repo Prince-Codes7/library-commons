@@ -1,0 +1,40 @@
+<section class="unilag-auth" aria-labelledby="login-heading">
+    <div class="unilag-auth__identity">
+        <img class="unilag-auth__logo" src="[% c.uri_for('/static/images/unilag_logo.png') %]" alt="University of Lagos" />
+        <p class="unilag-auth__eyebrow">UNIVERSITY OF LAGOS</p>
+        <h1>Library Services</h1>
+        <p class="unilag-auth__description">Access library facilities and services across the University of Lagos.</p>
+        <div class="unilag-auth__identity-footer">
+            <span>UNILAG</span>
+            <span>In deed and in truth</span>
+        </div>
+    </div>
+
+    <div class="unilag-auth__form-panel">
+        <div class="unilag-auth__form-content">
+            <p class="unilag-eyebrow">[% IF interface == 'administration' %]Staff sign in[% ELSE %]Library account[% END %]</p>
+            <h2 id="login-heading">[% c.loc("Log in") %]</h2>
+            <p class="unilag-auth__hint">Sign in with [% login_context %] to continue.</p>
+            [% IF interface == 'administration' && error == "BAD_LOGIN" %]
+                <div class="alert alert-danger" role="alert">[% c.loc("Bad username or password.") %]</div>
+            [% ELSIF interface == 'administration' && error == "EMPTY_LOGIN" %]
+                <div class="alert alert-danger" role="alert">[% c.loc("Empty username or password.") %]</div>
+            [% END %]
+
+            <form id="login-form" class="unilag-login-form" role="form" method="POST" action="[% login_action %]">
+                <div class="form-group">
+                    <label for="username">[% c.loc("Username") %]</label>
+                    <input type="text" name="username" class="form-control" id="username" autocomplete="username" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="password">[% c.loc("Password") %]</label>
+                    <input type="password" name="password" class="form-control" id="password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                    [% c.loc("Log in") %]
+                </button>
+            </form>
+        </div>
+    </div>
+</section>

@@ -19,8 +19,6 @@
                     <a class="nav-link" id="v-pills-data-retention-tab" data-toggle="pill" href="#v-pills-data-retention" role="tab" aria-controls="v-pills-data-retention" aria-selected="false">[% c.loc("Data retention") %]</a>
                     <a class="nav-link" id="v-pills-guest-passes-tab" data-toggle="pill" href="#v-pills-guest-passes" role="tab" aria-controls="v-pills-guest-passes" aria-selected="false">[% c.loc("Guest passes") %]</a>
                     <a class="nav-link" id="v-pills-ils-integration-tab" data-toggle="pill" href="#v-pills-ils-integration" role="tab" aria-controls="v-pills-ils-integration" aria-selected="false">[% c.loc("ILS integration") %]</a>
-                    <a class="nav-link" id="v-pills-payments-tab" data-toggle="pill" href="#v-pills-payments" role="tab" aria-controls="v-pills-payments" aria-selected="false">[% c.loc("Payments") %]</a>
-                    <a class="nav-link" id="v-pills-print-management-tab" data-toggle="pill" href="#v-pills-print-management" role="tab" aria-controls="v-pills-print-management" aria-selected="false">[% c.loc("Print management") %]</a>
                     <a class="nav-link" id="v-pills-reservation-settings-tab" data-toggle="pill" href="#v-pills-reservation-settings" role="tab" aria-controls="v-pills-reservation-settings" aria-selected="false">[% c.loc("Reservations") %]</a>
                     <a class="nav-link" id="v-pills-terms-of-service-tab" data-toggle="pill" href="#v-pills-terms-of-service" role="tab" aria-controls="v-pills-terms-of-service" aria-selected="false">[% c.loc("Terms of service") %]</a>
                     <a class="nav-link" id="v-pills-user-settings-tab" data-toggle="pill" href="#v-pills-user-settings" role="tab" aria-controls="v-pills-user-settings" aria-selected="false">[% c.loc("User settings") %]</a>
@@ -144,19 +142,6 @@
                         <small class="form-text text-muted">
                             [% c.loc("Length of time to retain user data of inactive users. If not set, data will be kept indefinitely.") %]
                             [% c.loc("Useful for implementing <a href='https://eugdpr.org/' target='_blank'>GDPR</a>") %]
-                        </small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="PrintJobRetentionDays">[% c.loc("Print job retention") %]</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="PrintJobRetentionDays" name="PrintJobRetentionDays" value="[% PrintJobRetentionDays %]">
-                            <div class="input-group-append">
-                                <span class="input-group-text">[% c.loc("Days") %]</span>
-                            </div>
-                        </div>
-                        <small class="form-text text-muted">
-                            [% c.loc("Length of time to retain print jobs. If not set, will default to 0 and print jobs will be removed nightly.") %]
                         </small>
                     </div>
 
@@ -975,156 +960,6 @@
                 </fieldset>
             </div>
 
-            <div class="tab-pane fade" id="v-pills-payments" role="tabpanel" aria-labelledby="v-pills-payments-tab">
-                <fieldset>
-                    <legend>[% c.loc("Stripe Payments") %]</legend>
-
-                    <div class="form-group">
-                        <label for="StripePublishableKey">[% c.loc("Stripe Publishable Key") %]</label>
-                        <div class="input-group">
-                            <textarea class="form-control" id="StripePublishableKey" name="StripePublishableKey" rows="2">[% StripePublishableKey %]</textarea>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Publishable key from Stripe Dashboard -> Developers -> API Keys.") %]</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="StripeSecretKey">[% c.loc("Stripe Secret Key") %]</label>
-                        <div class="input-group">
-                            <textarea class="form-control" id="StripeSecretKey" name="StripeSecretKey" rows="2">[% StripeSecretKey %]</textarea>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Secret key from Stripe Dashboard -> Developers -> API Keys.") %]</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="StripeWebhookSigningSecret">[% c.loc("Stripe Webhook Signing Secret") %]</label>
-                        <div class="input-group">
-                            <textarea class="form-control" id="StripeWebhookSigningSecret" name="StripeWebhookSigningSecret" rows="2">[% StripeWebhookSigningSecret %]</textarea>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Webhook Signing Secret from Stripe Dashboard Workbench. Create an event destination, follow the prompts, and place the signing secrete here. ") %]</small>
-                    </div>
-
-                </fieldset>
-            </div>
-
-            <div class="tab-pane fade" id="v-pills-print-management" role="tabpanel" aria-labelledby="v-pills-print-management-tab">
-                <fieldset>
-                    <legend>[% c.loc("Print management") %]</legend>
-
-                    <div class="form-group">
-                        <label for="PrinterConfiguration">[% c.loc("Printer configuration") %]</label>
-                        <div class="input-group">
-                            <textarea class="form-control" id="PrinterConfiguration" name="PrinterConfiguration" rows="15">[% PrinterConfiguration %]</textarea>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Define printer configuration in YAML format.") %]</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="QueuedPrintJobsTimeout">[% c.loc("Queued print jobs timeout") %]</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="QueuedPrintJobsTimeout" name="QueuedPrintJobsTimeout" value="[% QueuedPrintJobsTimeout %]">
-                            <div class="input-group-append">
-                                <span class="input-group-text">[% c.loc("Minutes") %]</span>
-                            </div>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Amount of time a print job can be in the status Queued before the job is set to Expired and new Pending job is added.") %]</small>
-                        <small class="form-text text-muted">[% c.loc("This is meant to allow print jobs taken by a Print Manager that has become unresponsive to be re-printed automatically.") %]</small>
-                        <small class="form-text text-muted">[% c.loc("Leave this setting empty to disable the feature.") %]</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="CanAdminsViewPrintFiles">[% c.loc("Allow administrators to view user print job contents") %]</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="CanAdminsViewPrintFiles" id="CanAdminsViewPrintFilesY" value="Y" [% IF CanAdminsViewPrintFiles == 'Y' %]checked[% END %]>
-                            <label class="form-check-label" for="CanAdminsViewPrintFilesY">
-                                [% c.loc("Allow administrators to view and download user's print job files.") %]
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="CanAdminsViewPrintFiles" id="CanAdminsViewPrintFilesN" value="N" [% IF CanAdminsViewPrintFiles == 'N' %]checked[% END %]>
-                            <label class="form-check-label" for="CanAdminsViewPrintFilesN">
-                                [% c.loc("Do not allow administrators to view and download user's print job files.") %]
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <h4>[% c.loc("Gratis printing") %]</h4>
-                    <div class="form-group">
-                        <label for="GratisPrintingValue">[% c.loc("Gratis prints default value") %]</label>
-                        <div class="input-group">
-                            <input type="number" min="0" step="1" class="form-control" id="GratisPrintingValue" name="GratisPrintingValue" value="[% GratisPrintingValue %]">
-                            <div class="input-group-append">
-                                <span class="input-group-text gratis-print-append">[% IF GratisPrintingMethod %][% c.loc(GratisPrintingMethod) %][% ELSE %][% c.loc("pages or funds") %][% END %]</span>
-                            </div>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Default number of gratis pages or funds to give users for free printing.") %]</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="GratisPrintingValueGuest">[% c.loc("Gratis prints default value for guests") %]</label>
-                        <div class="input-group">
-                            <input type="number" min="0" step="1" class="form-control" id="GratisPrintingValueGuest" name="GratisPrintingValueGuest" value="[% GratisPrintingValueGuest %]">
-                            <div class="input-group-append">
-                                <span class="input-group-text gratis-print-append">[% IF GratisPrintingMethod %][% c.loc(GratisPrintingMethod) %][% ELSE %][% c.loc("pages or funds") %][% END %]</span>
-                            </div>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Default number of gratis pages or funds to give guests for free printing.") %]</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="GratisPrintingMethod">[% c.loc('Gratis printing method') %]</label>
-                        <div class="input-group">
-                            <select class="form-control" id="GratisPrintingMethod" name="GratisPrintingMethod">
-                                <option value="pages" [% IF GratisPrintingMethod == 'pages' %]selected="selected"[% END %]>[% c.loc("Pages") %]</option>
-                                <option value="funds" [% IF GratisPrintingMethod == 'funds' %]selected="selected"[% END %]>[% c.loc("Funds") %]</option>
-                            </select>
-                        </div>
-                        <small class="form-text text-muted">[% c.loc("Method to use for gratis printing.") %]</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="GratisPrintingResetFrequency">[% c.loc('Gratis printing reset frequency') %]</label>
-                        <div class="input-group">
-                            <select class="form-control" id="GratisPrintingResetFrequency" name="GratisPrintingResetFrequency">
-                                <option value="" [% IF !GratisPrintingResetFrequency %]selected="selected"[% END %]>[% c.loc("Do not reset") %]</option>
-                                <option value="daily" [% IF GratisPrintingResetFrequency == 'daily' %]selected="selected"[% END %]>[% c.loc("Daily") %]</option>
-                                <option value="weekly" [% IF GratisPrintingResetFrequency == 'weekly' %]selected="selected"[% END %]>[% c.loc("Weekly") %]</option>
-                                <option value="monthly" [% IF GratisPrintingResetFrequency == 'monthly' %]selected="selected"[% END %]>[% c.loc("Monthly") %]</option>
-                            </select>
-                        </div>
-                        <small class="form-text text-muted">
-                            [% c.loc("Frequency to reset gratis printing to the default value.") %]
-                            [% c.loc("Daily will reset each night, monthly will reset on the first day of the month, and weekly will reset on the day of the week selected in <em>Gratis printing reset day</em>.") %]
-                        </small>
-                        <div id="GratisPrintingResetDayGroup" style="display:[% IF GratisPrintingResetFrequency == 'weekly' %]block[% ELSE %]none[% END %]">
-                            <label for="GratisPrintingResetDay">[% c.loc('Gratis printing reset day') %]</label>
-                            <div class="input-group">
-                                <select class="form-control" id="GratisPrintingResetDay" name="GratisPrintingResetDay">
-                                    <option value="Sunday" [% IF GratisPrintingResetDay == 'Sunday' %]selected="selected"[% END %]>[% c.loc("Sunday") %]</option>
-                                    <option value="Monday" [% IF GratisPrintingResetDay == 'Monday' %]selected="selected"[% END %]>[% c.loc("Monday") %]</option>
-                                    <option value="Tuesday" [% IF GratisPrintingResetDay == 'Tuesday' %]selected="selected"[% END %]>[% c.loc("Tuesday") %]</option>
-                                    <option value="Wednesday" [% IF GratisPrintingResetDay == 'Wednesday' %]selected="selected"[% END %]>[% c.loc("Wednesday") %]</option>
-                                    <option value="Thursday" [% IF GratisPrintingResetDay == 'Thursday' %]selected="selected"[% END %]>[% c.loc("Thursday") %]</option>
-                                    <option value="Friday" [% IF GratisPrintingResetDay == 'Friday' %]selected="selected"[% END %]>[% c.loc("Friday") %]</option>
-                                    <option value="Saturday" [% IF GratisPrintingResetDay == 'Saturday' %]selected="selected"[% END %]>[% c.loc("Saturday") %]</option>
-                                </select>
-                            </div>
-                            <small class="form-text text-muted">[% c.loc("Day of the week to reset gratis printing.") %]</small>
-                        </div>
-
-                        <script type="text/javascript">
-                            $(document).ready(function() {
-                                $('#GratisPrintingResetFrequency').change(function() {
-                                    if ($(this).val() == 'weekly') {
-                                        $('#GratisPrintingResetDayGroup').show();
-                                    } else {
-                                        $('#GratisPrintingResetDayGroup').hide();
-                                    }
-                                });
-                                $('#GratisPrintingMethod').change(function() {
-                                    $('.gratis-print-append').text($(this).val());
-                                });
-                            });
-                        </script>
-                    </div> 
-                </fieldset>
-            </div>
-
             <div class="tab-pane fade" id="v-pills-custom-javascript" role="tabpanel" aria-labelledby="v-pills-custom-javascript-tab">
                 <fieldset>
                     <legend>[% c.loc("Custom JavaScript") %]</legend>
@@ -1214,9 +1049,7 @@
                                 <div class="input-group-text">Type</div>
                             </div>
                             <select class="form-control" id="apiKeyType">
-                                <option value="PrintStation">[% c.loc("Print Station") %]</option>
-                                <option value="PrintManager">[% c.loc("Print Manager") %]</option>
-                                <!-- <option value="Client">[% c.loc("Client") %]</option> -->
+                                <option value="Client">[% c.loc("Client") %]</option>
                             </select>
                         </div>
 
