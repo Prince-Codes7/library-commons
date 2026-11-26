@@ -1,5 +1,8 @@
-<nav id="libki-primary-navbar" class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-    <a class="navbar-brand" href="[% c.uri_for('/') %]"><img src="[% c.uri_for('/static/images/logo-small.png') %]" /> [% c.loc("Libki Kiosk Management System") %]</a>
+<nav id="libki-primary-navbar" class="navbar navbar-expand-lg sticky-top unilag-topbar">
+    <a class="navbar-brand unilag-brand" href="[% c.uri_for('/') %]">
+        <img src="[% c.uri_for('/static/images/unilag_logo.png') %]" alt="University of Lagos" />
+        <span>Library Services</span>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,13 +10,13 @@
         [% INCLUDE language_menu.tt %]
 
         [% IF !c.user_exists %]
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto unilag-account-links">
                 <li class="nav-item">
                     <a class="nav-link" href="[% c.uri_for('/public/login') %]"><i class="fas fa-sign-in-alt"></i> [% c.loc("Log in") %]</a>
                 </li>
             </ul>
         [% ELSE %]
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto unilag-account-links">
                 <li class="nav-item">
                     <a class="nav-link" href="/public/account"><i class="fas fa-user"></i> [% c.user.username | html %]</a>
                 </li>

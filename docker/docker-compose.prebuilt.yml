@@ -1,0 +1,8 @@
+# Use the published image for dependencies while serving local application code.
+services:
+  libki:
+    build: !reset null
+    image: libki/libki-server:latest
+    volumes: !override
+      - ../root:/app/root
+      - ../lib:/app/lib

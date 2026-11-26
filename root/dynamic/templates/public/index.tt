@@ -1,3 +1,4 @@
+[% meta.title = c.loc("Library Services") %]
 [% SET active_class = "public__index" %]
 
 [% IF !c.user_exists && c.setting('DisplayPublicReservationsPage') == 'disabled' %]
@@ -12,16 +13,6 @@
             [% c.loc("Clients") %]
         </a>
     </li>
-    [% ELSE %]
-        [% SET tab = "printing" %]
-    [% END %]
-    [% IF c.user_exists && c.setting('PrinterConfiguration') %]
-        <li class="nav-item">
-            <a class="nav-link [% IF tab == 'printing' %]active[% END %]" id="printing-tab" data-toggle="tab" href="#printing" role="tab" aria-controls="printing" aria-selected="false">
-                <i class="fas fa-print" aria-hidden="true"></i>
-                [% c.loc("Printing") %]
-            </a>
-        </li>
     [% END %]
 </ul>
 <div class="tab-content" id="myTabContent">
@@ -29,11 +20,10 @@
     <div class="tab-pane fade [% IF tab == 'clients' %]show active[% END %]" id="clients" role="tabpanel" aria-labelledby="clients-tab">
 	[% INCLUDE index/clients.tt %]
     </div>
-    [% END %]
-    [% IF c.user_exists %]
-        <div class="tab-pane fade [% IF tab == 'printing' %]show active[% END %]" id="printing" role="tabpanel" aria-labelledby="printing-tab">
-            [% INCLUDE index/printing.tt %]
-        </div>
+    [% ELSIF c.user_exists %]
+    <div class="alert alert-info" role="status">
+        [% c.loc("Public reservations are currently unavailable. Please contact library staff for assistance.") %]
+    </div>
     [% END %]
 </div>
 

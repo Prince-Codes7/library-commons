@@ -228,7 +228,7 @@ sub update : Local : Args(0) {
     my $minutes              = $c->request->params->{'minutes'};
     my $funds                = $c->request->params->{'funds'};
     my $notes                = $c->request->params->{'notes'};
-    my $gratis_print_balance = $c->request->params->{'gratis_print_balance'} || 0;
+    my $gratis_print_balance = $c->request->params->{'gratis_print_balance'};
     my $status               = $c->request->params->{'status'};
     my @roles                = $c->request->params->{'roles'} || [];
 
@@ -243,21 +243,23 @@ sub update : Local : Args(0) {
 
     my $now = $c->now();
 
-    my $funds_changed = $funds != $user->funds;
-    $user->set_funds( $c, $funds ) if $funds_changed;
+    if ( defined $funds ) {
+        my $funds_changed = $funds != $user->funds;
+        $user->set_funds( $c, $funds ) if $funds_changed;
+    }
 
-    $success = 1 if $user->update(
-        {
+    my $user_update = {
+        firstname   => $firstname,
+        lastname    => $lastname,
+        category    => $category,
+        notes       => $notes,
+        status      => $status,
+        updated_on  => $now,
+    };
+    $user_update->{gratis_print_balance} = $gratis_print_balance || 0
+        if defined $gratis_print_balance;
 
-            firstname            => $firstname,
-            lastname             => $lastname,
-            category             => $category,
-            gratis_print_balance => $gratis_print_balance,
-            notes                => $notes,
-            status               => $status,
-            updated_on           => $now,
-        }
-    );
+    $success = 1 if $user->update($user_update);
 
     if ( defined $minutes ) {
         $c->model('DB::Allotment')->update_or_create(

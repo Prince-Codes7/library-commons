@@ -80,22 +80,8 @@ sub index_location :Path('/public') :Args(1) {
 sub printing :Path('/public/printing') :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->stash(
-        template         => 'public/index.tt',
-        tab              => 'printing',
-        current_location => undef,
-        CustomJsPublic   => $c->setting('CustomJsPublic'),
-    );
-
-    # If user is authenticated, let them through
-    if ($c->user_exists) {
-        return 1;
-    }
-
-    # Otherwise, save the requested URL and redirect to login
-    $c->session->{redirect_to} = $c->req->uri->path;
-    $c->res->redirect($c->uri_for($c->controller('Public::Login')->action_for('login')));
-    return 0; # Stop processing this request
+    $c->res->redirect($c->uri_for('/public'));
+    return 0;
 }
 
 
@@ -106,29 +92,10 @@ sub printing :Path('/public/printing') :Args(0) {
 =cut
 
 sub printing_location :Path('/public/printing') :Args(1) {
-    my ( $self, $c, $id ) = @_;
+    my ( $self, $c ) = @_;
 
-    $c->detach('/default')
-        unless $id =~ /^\d+$/;
-    my $location = $c->model('DB::Location')->find($id)
-        or $c->detach('/default');
-
-    $c->stash(
-        template         => 'public/index.tt',
-        tab              => 'printing',
-        current_location => $location,
-        CustomJsPublic   => $c->setting('CustomJsPublic'),
-    );
-
-    # If user is authenticated, let them through
-    if ($c->user_exists) {
-        return 1;
-    }
-
-    # Otherwise, save the requested URL and redirect to login
-    $c->session->{redirect_to} = $c->req->uri->path;
-    $c->res->redirect($c->uri_for($c->controller('Public::Login')->action_for('login')));
-    return 0; # Stop processing this request
+    $c->res->redirect($c->uri_for('/public'));
+    return 0;
 }
 
 =head2 upload_print_file

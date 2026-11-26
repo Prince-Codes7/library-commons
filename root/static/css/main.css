@@ -1,37 +1,139 @@
-/* Force scrollbars to avoid horizontal centering jumps */
+:root {
+    color-scheme: light;
+    --unilag-ink: #17283b;
+    --unilag-muted: #687789;
+    --unilag-navy: #102b49;
+    --unilag-navy-deep: #0b2038;
+    --unilag-blue: #1d5b8f;
+    --unilag-blue-hover: #174a74;
+    --unilag-gold: #e4b84f;
+    --unilag-page: #f3f6f9;
+    --unilag-surface: #ffffff;
+    --unilag-surface-soft: #f7f9fb;
+    --unilag-border: #dce3ea;
+    --unilag-shadow: 0 8px 24px rgba(18, 40, 65, 0.06);
+}
+
+html.dark,
+html[data-bs-theme="dark"] {
+    color-scheme: dark;
+    --unilag-ink: #e8eef5;
+    --unilag-muted: #a4b2c1;
+    --unilag-navy: #10263e;
+    --unilag-navy-deep: #0b1c2f;
+    --unilag-blue: #76b8eb;
+    --unilag-blue-hover: #a1d0f2;
+    --unilag-gold: #e4b84f;
+    --unilag-page: #111b28;
+    --unilag-surface: #192638;
+    --unilag-surface-soft: #202f42;
+    --unilag-border: #34465b;
+    --unilag-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+html.dark .unilag-app .btn-primary,
+html[data-bs-theme="dark"] .unilag-app .btn-primary {
+    border-color: #286d9c;
+    background: #286d9c;
+    color: #fff;
+}
+
+html.dark .unilag-app .btn-primary:hover,
+html[data-bs-theme="dark"] .unilag-app .btn-primary:hover {
+    border-color: #205a83;
+    background: #205a83;
+    color: #fff;
+}
+
+html.dark .unilag-app .alert-info,
+html[data-bs-theme="dark"] .unilag-app .alert-info {
+    border-color: #3a566b;
+    background: #20394b;
+    color: #d3e6f2;
+}
+
+html.dark .unilag-app .alert-danger,
+html[data-bs-theme="dark"] .unilag-app .alert-danger {
+    border-color: #75414a;
+    background: #3a252b;
+    color: #ffe0dc;
+}
+
 html {
-  overflow-y: scroll;
+    min-height: 100%;
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
 }
 
-.row {
-    margin-left: auto;
-    margin-right: auto;
+body.unilag-app {
+    min-height: 100vh;
+    margin: 0;
+    background: var(--unilag-page);
+    color: var(--unilag-ink);
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
 }
 
-.hidden {
+.unilag-app *,
+.unilag-app *::before,
+.unilag-app *::after {
+    box-sizing: border-box;
+}
+
+.unilag-app a {
+    color: var(--unilag-blue);
+}
+
+.unilag-app a:hover {
+    color: var(--unilag-blue-hover);
+}
+
+.unilag-app :focus-visible {
+    outline: 3px solid rgba(228, 184, 79, 0.8);
+    outline-offset: 2px;
+}
+
+.unilag-app h1,
+.unilag-app h2,
+.unilag-app h3,
+.unilag-app h4,
+.unilag-app h5 {
+    color: var(--unilag-ink);
+    font-weight: 650;
+    letter-spacing: -0.02em;
+}
+
+.unilag-app .row {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.unilag-app .hidden {
     visibility: hidden;
 }
 
-.float-right {
+.unilag-app .float-right {
     float: right;
 }
 
-.float-left {
+.unilag-app .float-left {
     float: left;
 }
 
-.display-none {
-    display: none;
+.unilag-app .display-none {
+    display: none !important;
 }
 
-form .required {
-    font-weight: bold;
+.unilag-app form .required {
+    font-weight: 700;
 }
 
 .libki-message {
-    z-index:  999999;
+    z-index: 999999;
     position: absolute;
-    width: 50%;
+    width: min(500px, calc(100vw - 2rem)) !important;
 }
 
 .table-row-toolbar {
@@ -41,35 +143,385 @@ form .required {
 }
 
 .table-toolbar {
-    margin-left: 10px;
     margin-right: 10px;
+    margin-left: 10px;
 }
 
-/* 'Group' headers for grouping results in DataTables */
+#libki-primary-navbar.unilag-topbar {
+    min-height: 76px;
+    padding: 0.75rem clamp(1rem, 3vw, 3rem);
+    border-bottom: 3px solid var(--unilag-gold);
+    background: var(--unilag-navy-deep);
+    box-shadow: 0 4px 16px rgba(6, 24, 42, 0.12);
+}
+
+.unilag-topbar .unilag-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-right: 2rem;
+    padding: 0;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.unilag-topbar .unilag-brand:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.unilag-brand img {
+    display: block;
+    width: 138px;
+    max-height: 56px;
+    object-fit: contain;
+}
+
+.unilag-brand span {
+    padding-left: 0.9rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.unilag-topbar .navbar-nav {
+    align-items: center;
+}
+
+.unilag-topbar .navbar-nav .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    padding: 0.55rem 0.8rem;
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.91rem;
+    font-weight: 500;
+    transition: background-color 140ms ease, color 140ms ease;
+}
+
+.unilag-topbar .navbar-nav .nav-link:hover,
+.unilag-topbar .navbar-nav .nav-item.active > .nav-link,
+.unilag-topbar .navbar-nav .nav-link.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.unilag-topbar .navbar-nav .nav-link i {
+    margin-right: 0.45rem;
+}
+
+.unilag-topbar .dropdown-menu {
+    margin-top: 0.45rem;
+    padding: 0.45rem;
+    border: 1px solid var(--unilag-border);
+    border-radius: 9px;
+    background: var(--unilag-surface);
+    box-shadow: var(--unilag-shadow);
+}
+
+.unilag-topbar .dropdown-item {
+    padding: 0.55rem 0.7rem;
+    border-radius: 5px;
+    color: var(--unilag-ink);
+}
+
+.unilag-topbar .dropdown-item:hover,
+.unilag-topbar .dropdown-item.active {
+    background: var(--unilag-surface-soft);
+    color: var(--unilag-blue);
+}
+
+.unilag-topbar .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.unilag-topbar .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.unilag-topbar .unilag-account-links {
+    margin-left: auto;
+}
+
+.unilag-account-name .nav-link {
+    color: #fff !important;
+}
+
+#content.unilag-content {
+    width: 100%;
+    max-width: 1600px;
+    min-height: calc(100vh - 156px);
+    margin: 0 auto;
+    padding: 1.75rem clamp(1rem, 3vw, 3rem) 2.5rem;
+}
+
+.unilag-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0.8rem clamp(1rem, 3vw, 3rem);
+    border: 0;
+    border-radius: 0;
+    background: var(--unilag-surface);
+    color: var(--unilag-muted);
+    font-size: 0.82rem;
+    list-style: none;
+}
+
+.unilag-breadcrumb li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+}
+
+.unilag-breadcrumb li.active {
+    color: var(--unilag-ink);
+    font-weight: 600;
+}
+
+.unilag-breadcrumb .divider {
+    color: #9aa8b7;
+}
+
+.unilag-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 1rem clamp(1rem, 3vw, 3rem) 1.5rem;
+    border-top: 1px solid var(--unilag-border);
+    color: var(--unilag-muted);
+    font-size: 0.78rem;
+}
+
+.unilag-footer__version {
+    color: var(--unilag-muted);
+}
+
+.unilag-eyebrow {
+    margin: 0 0 0.45rem;
+    color: var(--unilag-blue);
+    font-size: 0.73rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.unilag-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 0 0 1.6rem;
+    padding: 0.15rem 0 1.5rem;
+    border-bottom: 1px solid var(--unilag-border);
+}
+
+.unilag-page-header h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 3vw, 2.25rem);
+    line-height: 1.2;
+}
+
+.unilag-page-header p:last-child {
+    margin: 0.55rem 0 0;
+    color: var(--unilag-muted);
+}
+
+.unilag-page-header__mark {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--unilag-border);
+    border-radius: 12px;
+    background: var(--unilag-surface);
+    color: var(--unilag-blue);
+    font-size: 1.25rem;
+}
+
+#primaryTabs,
+#topTabs {
+    gap: 0.35rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--unilag-border);
+}
+
+#primaryTabs .nav-link,
+#topTabs .nav-link {
+    margin-bottom: -1px;
+    padding: 0.8rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 8px 8px 0 0;
+    color: var(--unilag-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#primaryTabs .nav-link:hover,
+#topTabs .nav-link:hover {
+    color: var(--unilag-blue);
+}
+
+#primaryTabs .nav-link.active,
+#topTabs .nav-link.active {
+    border-color: var(--unilag-border) var(--unilag-border) var(--unilag-surface);
+    background: var(--unilag-surface);
+    color: var(--unilag-blue);
+}
+
+#primaryTabsContent,
+#topTabs + .tab-content {
+    padding: clamp(1rem, 2vw, 1.5rem);
+    border: 1px solid var(--unilag-border);
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+    background: var(--unilag-surface);
+    box-shadow: var(--unilag-shadow);
+}
+
+.unilag-app .tab-content > .tab-pane {
+    color: var(--unilag-ink);
+}
+
+.unilag-app .tab-content .navbar {
+    min-height: auto;
+    padding: 0.25rem 0 1rem;
+    background: transparent !important;
+}
+
+.unilag-app .nav.flex-column {
+    padding: 0.5rem;
+    border: 1px solid var(--unilag-border);
+    border-radius: 9px;
+    background: var(--unilag-surface-soft);
+}
+
+.unilag-app .nav.flex-column .nav-link {
+    padding: 0.55rem 0.7rem;
+    border-radius: 6px;
+    color: var(--unilag-muted);
+}
+
+.unilag-app .nav.flex-column .nav-item .nav-link.active {
+    background: rgba(29, 91, 143, 0.1);
+    color: var(--unilag-blue);
+    font-weight: 650;
+}
+
+.unilag-app .border-right {
+    border-color: var(--unilag-border) !important;
+}
+
+.unilag-app h4 {
+    margin-top: 0.6rem;
+    font-size: 1rem;
+}
+
+.unilag-app table {
+    width: 100% !important;
+}
+
+.unilag-app .table {
+    margin-bottom: 0;
+    border-color: var(--unilag-border);
+    background: var(--unilag-surface);
+    color: var(--unilag-ink);
+    font-size: 0.88rem;
+}
+
+.unilag-app .table thead th {
+    padding: 0.8rem 0.75rem;
+    border-color: var(--unilag-border);
+    background: var(--unilag-surface-soft);
+    color: var(--unilag-muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.unilag-app .table td {
+    padding: 0.75rem;
+    border-color: var(--unilag-border);
+    vertical-align: middle;
+}
+
+.unilag-app .table-striped tbody tr:nth-of-type(odd) {
+    background: var(--unilag-surface-soft);
+}
+
+.unilag-app .table tbody tr:hover {
+    background: rgba(29, 91, 143, 0.07);
+}
+
 td.group {
-    background-color: #d1cfd0 !important;
-    border-bottom: 2px solid #A19B9E;
-    border-top: 2px solid #A19B9E;
+    border-top: 2px solid var(--unilag-border);
+    border-bottom: 2px solid var(--unilag-border);
+    background: var(--unilag-surface-soft) !important;
+    color: var(--unilag-ink);
+    font-weight: 700;
     text-align: left;
-    font-weight: bold;
 }
 
-#breadcrumbs {
-    padding-top: 0px;
-    padding-bottom: 5px;
-    margin-bottom: 0px;
+.dataTables_wrapper,
+.dt-container {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    color: var(--unilag-muted);
+    font-size: 0.85rem;
+}
+
+#primaryTabsContent .tab-pane,
+#primaryTabsContent .dt-layout-row,
+#primaryTabsContent .dt-layout-cell {
+    min-width: 0;
 }
 
 .dataTables_wrapper div.row:first-of-type {
-    margin-top: 15px;
+    margin-top: 0.5rem;
 }
 
 .dataTables_wrapper div.row:last-of-type {
-    margin-top: 40px;
+    margin-top: 1rem;
 }
 
 .dataTables_filter {
-    margin-left: 15px;
+    margin-left: 0.75rem;
+}
+
+.dataTables_filter input,
+.dataTables_length select {
+    min-height: 38px;
+    margin-left: 0.35rem;
+    border: 1px solid var(--unilag-border);
+    border-radius: 6px;
+    background: var(--unilag-surface);
+    color: var(--unilag-ink);
+}
+
+.dataTables_info {
+    padding-top: 0.75rem !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 6px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border-color: var(--unilag-blue);
+    background: var(--unilag-blue);
+    color: #fff !important;
 }
 
 .libki-refresh-counter {
@@ -80,94 +532,460 @@ td.group {
     margin-right: 0.7em;
 }
 
-table {
-    width: 100% !important;
-}
-
 .hullabaloo {
-    width: 500px !important;
+    width: min(500px, calc(100vw - 2rem)) !important;
 }
 
 .libki-toolbar-btn {
-    background-color: white;
+    background: var(--unilag-surface);
 }
 
-@media (max-width: 450px) {
-    .navbar-brand {
-        font-size: 1rem;
-    }
+.unilag-app .btn {
+    min-height: 38px;
+    padding: 0.48rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.unilag-app .btn:active {
+    transform: translateY(1px);
+}
+
+.unilag-app .btn-primary {
+    border-color: var(--unilag-blue);
+    background: var(--unilag-blue);
+    color: #fff;
+}
+
+.unilag-app .btn-primary:hover,
+.unilag-app .btn-primary:focus {
+    border-color: var(--unilag-blue-hover);
+    background: var(--unilag-blue-hover);
+    color: #fff;
+}
+
+.unilag-app .btn-secondary {
+    border-color: #667789;
+    background: #667789;
+    color: #fff;
+}
+
+.unilag-app .btn-info {
+    border-color: #3d8391;
+    background: #3d8391;
+    color: #fff;
+}
+
+.unilag-app .btn-success {
+    border-color: #32775b;
+    background: #32775b;
+    color: #fff;
+}
+
+.unilag-app .btn-warning {
+    border-color: #d19b35;
+    background: #d19b35;
+    color: #17283b;
+}
+
+.unilag-app .btn-danger {
+    border-color: #b94b50;
+    background: #b94b50;
+    color: #fff;
+}
+
+.unilag-app .btn-outline-primary,
+.unilag-app .btn-outline-secondary,
+.unilag-app .btn-outline-info,
+.unilag-app .btn-outline-dark,
+.unilag-app .btn-outline-danger {
+    background: transparent;
+}
+
+.unilag-app .form-control,
+.unilag-app .custom-select,
+.unilag-app select.form-control,
+.unilag-app textarea.form-control {
+    min-height: 40px;
+    border: 1px solid var(--unilag-border);
+    border-radius: 6px;
+    background-color: var(--unilag-surface);
+    color: var(--unilag-ink);
+    box-shadow: none;
+}
+
+.unilag-app .form-control:focus,
+.unilag-app .custom-select:focus {
+    border-color: var(--unilag-blue);
+    box-shadow: 0 0 0 3px rgba(29, 91, 143, 0.13);
+}
+
+.unilag-app .form-group label {
+    margin-bottom: 0.4rem;
+    color: var(--unilag-ink);
+    font-size: 0.84rem;
+    font-weight: 650;
+}
+
+.unilag-app .input-group-text,
+.unilag-app .input-group-addon {
+    border-color: var(--unilag-border);
+    background: var(--unilag-surface-soft);
+    color: var(--unilag-muted);
+}
+
+.unilag-app .card,
+.unilag-app .modal-content {
+    overflow: hidden;
+    border: 1px solid var(--unilag-border);
+    border-radius: 10px;
+    background: var(--unilag-surface);
+    color: var(--unilag-ink);
+    box-shadow: var(--unilag-shadow);
+}
+
+.unilag-app .card-header,
+.unilag-app .modal-header,
+.unilag-app .modal-footer {
+    border-color: var(--unilag-border);
+    background: var(--unilag-surface-soft);
+}
+
+.unilag-app .modal-title {
+    color: var(--unilag-ink);
+    font-weight: 650;
+}
+
+.unilag-app .close {
+    color: var(--unilag-ink);
+    text-shadow: none;
+}
+
+.unilag-app .alert {
+    border-radius: 7px;
+}
+
+.unilag-app .alert-info {
+    border-color: #b9d7e8;
+    background: #eef7fb;
+    color: #23465d;
+}
+
+.unilag-app .alert-danger {
+    border-color: #efb4b1;
+    background: #fff1f0;
+    color: #7f1d1d;
+}
+
+.unilag-app .tree ul {
+    margin: 0;
+    padding-left: 1rem;
+    list-style: none;
+}
+
+.unilag-app .tree li {
+    position: relative;
+    margin: 4px 0;
+}
+
+.unilag-app .tree li::before {
+    position: absolute;
+    top: 0;
+    left: -12px;
+    width: 12px;
+    height: 100%;
+    border-left: 1px solid var(--unilag-border);
+    content: "";
+}
+
+.unilag-app .tree li::after {
+    position: absolute;
+    top: 14px;
+    left: -12px;
+    width: 12px;
+    border-top: 1px solid var(--unilag-border);
+    content: "";
+}
+
+.unilag-app .tree li:last-child::before {
+    height: 14px;
+}
+
+.unilag-app .tree li > span {
+    display: block;
+    padding: 6px 10px;
+    border: 1px solid var(--unilag-border);
+    border-radius: 5px;
+    background: var(--unilag-surface);
+    color: var(--unilag-ink);
+    cursor: pointer;
+}
+
+.unilag-app .tree li > span:hover {
+    background: var(--unilag-surface-soft);
+}
+
+.unilag-app .tree li.active > span {
+    background: var(--unilag-blue);
+    color: #fff;
+    font-weight: 650;
+}
+
+.unilag-app .tree li.active ul li > span {
+    background: var(--unilag-surface-soft);
+    color: var(--unilag-ink);
+}
+
+.truncate-cell {
+    max-width: 32rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .copy-select {
     max-width: 4rem;
 }
-.tree ul {
-  list-style: none;
-  margin: 0;
-  padding-left: 1rem;
-}
 
-.tree li {
-  position: relative;
-  margin: 4px 0;
-}
-.tree li::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -12px;
-  width: 12px;
-  height: 100%;
-  border-left: 1px solid #ccc;
-}
-
-.tree li::after {
-  content: '';
-  position: absolute;
-  top: 14px;
-  left: -12px;
-  width: 12px;
-  border-top: 1px solid #ccc;
-}
-.tree li:last-child::before {
-  height: 14px;
-}
-.tree li > span {
-  display: block;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-
-.tree li > span:hover {
-  background: #dee2e6;
-}
-
-.tree li:not(:has(ul)) > span::after {
-  content: '';
-}
-.tree li.active > span {
-  background: #007bff;
-  color: #000;
-  font-weight: bolder;
-}
-
-.tree li.active ul li > span {
-  background: #66A6FF;
-  color: #6c757d;
-}
-
-.nav.flex-column .nav-item .nav-link.active {
-    font-weight: bolder;
-    color: #000;
-}
-
-.print-row-done {
-    color: #999999;
-}
-.truncate-cell {
-    max-width: 32rem;
-    white-space: nowrap;
+.unilag-auth {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    width: min(100%, 1050px);
+    min-height: 510px;
+    margin: clamp(1.5rem, 6vh, 4.5rem) auto;
     overflow: hidden;
-    text-overflow: ellipsis;
+    border: 1px solid var(--unilag-border);
+    border-radius: 14px;
+    background: var(--unilag-surface);
+    box-shadow: 0 18px 48px rgba(11, 32, 56, 0.12);
+}
+
+.unilag-auth__identity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: clamp(2rem, 5vw, 4rem);
+    background: var(--unilag-navy);
+    color: #fff;
+}
+
+.unilag-auth__logo {
+    display: block;
+    width: min(100%, 300px);
+    max-height: 120px;
+    margin-bottom: 2.5rem;
+    object-fit: contain;
+    object-position: left center;
+}
+
+.unilag-auth__eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--unilag-gold);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+}
+
+.unilag-auth__identity h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.9rem, 3vw, 2.55rem);
+    line-height: 1.15;
+}
+
+.unilag-auth__description {
+    max-width: 28rem;
+    margin: 1rem 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.98rem;
+}
+
+.unilag-auth__identity-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.78rem;
+}
+
+.unilag-auth__identity-footer span:first-child {
+    padding: 0.3rem 0.55rem;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.unilag-auth__form-panel {
+    display: flex;
+    align-items: center;
+    padding: clamp(2rem, 5vw, 4.25rem);
+    background: var(--unilag-surface);
+}
+
+.unilag-auth__form-content {
+    width: 100%;
+    max-width: 390px;
+    margin: 0 auto;
+}
+
+.unilag-auth__form-content h2 {
+    margin: 0;
+    font-size: 1.9rem;
+}
+
+.unilag-auth__hint {
+    margin: 0.55rem 0 2rem;
+    color: var(--unilag-muted);
+}
+
+.unilag-login-form .form-group {
+    margin-bottom: 1.2rem;
+}
+
+.unilag-login-form .form-control {
+    min-height: 48px;
+    padding: 0.65rem 0.8rem;
+}
+
+.unilag-login-form .btn {
+    min-height: 48px;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 991.98px) {
+    #libki-primary-navbar.unilag-topbar {
+        padding-right: 1rem;
+        padding-left: 1rem;
+    }
+
+    .unilag-topbar .navbar-nav {
+        align-items: stretch;
+    }
+
+    .unilag-topbar .navbar-nav .nav-link {
+        padding-right: 0.7rem;
+        padding-left: 0.7rem;
+    }
+
+    .unilag-topbar .navbar-nav .nav-link:hover,
+    .unilag-topbar .navbar-nav .nav-item.active > .nav-link {
+        background: transparent;
+        color: #fff;
+    }
+
+    .unilag-topbar .unilag-account-links {
+        margin-left: 0;
+    }
+
+    #content.unilag-content {
+        padding-top: 1.25rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .unilag-brand img {
+        width: 110px;
+    }
+
+    .unilag-brand span {
+        padding-left: 0.65rem;
+        font-size: 0.85rem;
+    }
+
+    .unilag-page-header {
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .unilag-page-header__mark {
+        width: 44px;
+        height: 44px;
+    }
+
+    #primaryTabs,
+    #topTabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    #primaryTabs .nav-link,
+    #topTabs .nav-link {
+        white-space: nowrap;
+    }
+
+    #primaryTabsContent,
+    #topTabs + .tab-content {
+        padding: 0.85rem;
+    }
+
+    #primaryTabsContent .navbar {
+        display: block;
+    }
+
+    #primaryTabsContent .navbar > .navbar-nav:first-child {
+        display: none;
+    }
+
+    #primaryTabsContent .navbar > .navbar-nav:last-child {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        width: 100%;
+    }
+
+    #primaryTabsContent .navbar .nav-item,
+    #primaryTabsContent .navbar .btn-group {
+        max-width: 100%;
+    }
+
+    #primaryTabsContent .navbar .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    #primaryTabsContent .navbar .btn-group .btn {
+        flex: 1 1 auto;
+    }
+
+    .unilag-auth {
+        grid-template-columns: 1fr;
+        min-height: 0;
+        margin-top: 1.25rem;
+    }
+
+    .unilag-auth__identity {
+        padding: 1.6rem;
+    }
+
+    .unilag-auth__logo {
+        width: 210px;
+        max-height: 84px;
+        margin-bottom: 1.3rem;
+    }
+
+    .unilag-auth__identity-footer {
+        margin-top: 1.5rem;
+        padding-top: 0;
+    }
+
+    .unilag-auth__form-panel {
+        padding: 2rem 1.6rem;
+    }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }
